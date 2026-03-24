@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nomzamo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PROFILE HEADER -->
+<div class="profile">
+  <img src="/IMG-20260313-WA0002.jpg" alt="Profile Image" class="profile-img">
+  
+  <h1 class="name">NOMZAMO FORTUNATE MALOPE</h1>
+</div>
+
+<div class="gallery">
+
+  <!-- IMAGES -->
+  <div class="card">
+    <img src="/media/IMG-20250522-WA0010.jpg" alt="IMG-20250522-WA0010.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250530-WA0003.jpg" alt="IMG-20250530-WA0003.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250530-WA0005.jpg" alt="IMG-20250530-WA0005.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250530-WA0006.jpg" alt="IMG-20250530-WA0006.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250614-WA0006.jpg" alt="IMG-20250614-WA0006.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250910-WA0020.jpg" alt="IMG-20250910-WA0020.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250910-WA0021.jpg" alt="IMG-20250910-WA0021.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20250918-WA0011.jpg" alt="IMG-20250918-WA0011.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20251207-WA0000.jpg" alt="IMG-20251207-WA0000.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20260308-WA0017.jpg" alt="IMG-20260308-WA0017.jpg">
+  </div>
+  <div class="card">
+    <img src="/media/IMG-20260308-WA0018.jpg" alt="IMG-20260308-WA0018.jpg">
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="card">
+    <video src="/media/VID-20241207-WA0000.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251103-WA0002.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251103-WA0005.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251103-WA0008.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251103-WA0009.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251107-WA0041.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20251110-WA0003.mp4" controls></video>
+   
+  </div>
+  <div class="card">
+    <video src="/media/VID-20260111-WA0004.mp4" controls></video>
+   
+  </div>
+  <div class="card">
+    <video src="/media/VID-20260111-WA0005.mp4" controls></video>
+    
+  </div>
+  <div class="card">
+    <video src="/media/VID-20260129-WA0203.mp4" controls></video>
+  </div>
+  <div class="card">
+    <video src="/media/VID-20250918-WA0010.mp4" controls></video>
+  </div>
+
+</div>
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button id="lightboxClose" class="lightbox-close" type="button" aria-label="Close">×</button>
+
+  <button id="lightboxPrev" class="lightbox-nav prev" type="button" aria-label="Previous image">‹</button>
+
+  <div class="lightbox-content">
+    <img id="lightboxImg" alt="">
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <button id="lightboxNext" class="lightbox-nav next" type="button" aria-label="Next image">›</button>
+</div>
+
+<script>
+  // script.js
+(() => {
+  const galleryImages = Array.from(document.querySelectorAll(".gallery img"));
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const caption = document.getElementById("lightboxCaption");
+
+  const btnClose = document.getElementById("lightboxClose");
+  const btnPrev = document.getElementById("lightboxPrev");
+  const btnNext = document.getElementById("lightboxNext");
+
+  let currentIndex = -1;
+
+  function openLightbox(index) {
+    currentIndex = index;
+
+    const img = galleryImages[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt || "Image";
+    caption.textContent = img.alt || "";
+
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+
+    // Prevent page scroll when lightbox is open
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+
+    // Clear src to stop memory usage on some devices
+    lightboxImg.src = "";
+    document.body.style.overflow = "";
+  }
+
+  function showPrev() {
+    if (!galleryImages.length) return;
+    const nextIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    openLightbox(nextIndex);
+  }
+
+  function showNext() {
+    if (!galleryImages.length) return;
+    const nextIndex = (currentIndex + 1) % galleryImages.length;
+    openLightbox(nextIndex);
+  }
+
+  // Click images -> open
+  galleryImages.forEach((img, index) => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => openLightbox(index));
+  });
+
+  // Close actions
+  btnClose.addEventListener("click", closeLightbox);
+
+  // Click outside image closes
+  lightbox.addEventListener("click", (e) => {
+    // If user clicks the dark background (not the image/content/buttons)
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Prev/Next buttons
+  btnPrev.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showPrev();
+  });
+
+  btnNext.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showNext();
+  });
+
+  // Keyboard controls
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("open")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "ArrowRight") showNext();
+  });
+})();
+</script>
+</body>
+</html>
