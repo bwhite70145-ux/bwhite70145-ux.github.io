@@ -1,147 +1,170 @@
 /* style.css */
 :root {
-  --bg-color: #121212;
-  --panel-bg: #1e1e1e;
-  --card-bg: #222222;
-  --border-color: #333333;
-  --text-color: #e1e1e1;
-  --text-muted: #bbbbbb;
+  --bg-color: #0f1115;
+  --panel-bg: #151926;
+  --card-bg: #171c2b;
+  --border-color: rgba(255, 255, 255, 0.10);
+  --text-color: rgba(255, 255, 255, 0.92);
+  --text-muted: rgba(255, 255, 255, 0.68);
   --accent-color: #4a90e2;
-  --shadow-color: rgba(0, 0, 0, 0.6);
+  --shadow-color: rgba(0, 0, 0, 0.55);
+
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --max-width: 1100px;
 }
 
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+html, body {
+  height: 100%;
 }
 
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(74, 144, 226, 0.12), transparent 60%),
+              radial-gradient(900px 500px at 80% 10%, rgba(160, 92, 255, 0.10), transparent 55%),
+              var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+/* -------------------------
+   PROFILE (Responsive)
+-------------------------- */
 .profile {
+  padding: clamp(20px, 4vw, 44px) 16px clamp(18px, 3vw, 28px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 55%),
+              var(--panel-bg);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 18px var(--shadow-color);
+  text-align: center;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px 30px;
-  background-color: var(--panel-bg);
-  box-shadow: 0 2px 10px var(--shadow-color);
-  text-align: center;
+  gap: 12px;
 }
 
 .profile-img {
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
+  width: clamp(92px, 18vw, 140px);
+  height: clamp(92px, 18vw, 140px);
   border-radius: 50%;
-  border: 3px solid var(--accent-color);
-  box-shadow: 0 4px 15px var(--accent-color);
-  margin-bottom: 20px;
-  transition: transform 0.3s ease;
+  object-fit: cover;
+  border: 3px solid rgba(74, 144, 226, 0.9);
+  box-shadow:
+    0 10px 30px rgba(74, 144, 226, 0.18),
+    0 0 0 6px rgba(74, 144, 226, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .profile-img:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  box-shadow:
+    0 14px 38px rgba(74, 144, 226, 0.22),
+    0 0 0 7px rgba(74, 144, 226, 0.10);
 }
 
 .name {
-  font-size: 2.4rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
   margin: 0;
-  color: var(--accent-color);
-  text-shadow: 0 0 12px var(--accent-color);
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  font-size: clamp(1.25rem, 3.4vw, 2.2rem);
+  color: var(--text-color);
 }
 
 .bio-text {
-  font-size: 1.1rem;
+  margin: 0;
+  font-size: clamp(0.95rem, 2.4vw, 1.05rem);
   color: var(--text-muted);
-  margin-top: 6px;
   font-style: italic;
 }
 
+/* -------------------------
+   GALLERY GRID (Responsive)
+-------------------------- */
 .gallery {
-  max-width: 1100px;
-  margin: 40px auto 60px;
-  padding: 0 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 28px);
   display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+
+  /* Responsive columns:
+     - phones: 2 columns if possible
+     - tablets: 3 columns
+     - desktop: 4+ columns depending on width
+  */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
+/* -------------------------
+   CARD (Image/Video)
+-------------------------- */
 .card {
-  background-color: var(--card-bg);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 3px 15px var(--shadow-color);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%),
+              var(--card-bg);
   border: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 8px 22px var(--shadow-color);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px var(--shadow-color);
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px var(--shadow-color);
 }
 
+/* Media wrapper maintains a consistent aspect ratio */
 .card img,
 .card video {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
-  background-color: #000;
   display: block;
+  background: #000;
   border-bottom: 1px solid var(--border-color);
-  border-radius: 14px 14px 0 0;
+
+  /* Keep nice consistent look without stretching */
+  aspect-ratio: 1 / 1;  /* square cards */
+  object-fit: cover;
 }
 
+/* Improve video controls feel */
 .card video {
   outline: none;
 }
 
+/* Caption */
 .bio {
+  margin: 0;
+  padding: 10px 12px 12px;
   font-size: 0.9rem;
   color: var(--text-muted);
-  padding: 12px 14px;
-  margin: 0;
-  flex-shrink: 0;
   text-align: center;
-  user-select: none;
+
+  /* Keep long filenames neat */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Responsive typography for name */
-@media (max-width: 480px) {
-  .name {
-    font-size: 1.8rem;
-  }
-
-  .profile-img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
-  }
-}
-
-/* Lightbox popup */
+/* -------------------------
+   LIGHTBOX (Responsive)
+-------------------------- */
 .lightbox {
   position: fixed;
   inset: 0;
-  display: none;               /* hidden by default */
+  display: none;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.88);
   z-index: 9999;
-  padding: 20px;
+  padding: 16px;
 }
 
 .lightbox.open {
@@ -149,22 +172,21 @@ body {
 }
 
 .lightbox-content {
-  max-width: min(1000px, 92vw);
+  width: min(1000px, 94vw);
   max-height: 86vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
   gap: 10px;
+  justify-items: center;
 }
 
 .lightbox-content img {
+  max-width: 94vw;
+  max-height: 76vh;
   width: auto;
   height: auto;
-  max-width: 92vw;
-  max-height: 76vh;
-  border-radius: 14px;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+  border-radius: var(--radius-lg);
   background: #000;
+  box-shadow: 0 18px 60px rgba(0,0,0,0.7);
 }
 
 .lightbox-caption {
@@ -172,16 +194,16 @@ body {
   font-size: 13px;
   color: rgba(255,255,255,0.75);
   text-align: center;
-  max-width: 92vw;
+  max-width: 94vw;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .lightbox-close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   width: 44px;
   height: 44px;
   border-radius: 12px;
@@ -197,7 +219,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 44px;
-  height: 70px;
+  height: 72px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.10);
@@ -206,11 +228,34 @@ body {
   cursor: pointer;
   display: grid;
   place-items: center;
+  user-select: none;
 }
 
-.lightbox-nav.prev { left: 14px; }
-.lightbox-nav.next { right: 14px; }
+.lightbox-nav.prev { left: 12px; }
+.lightbox-nav.next { right: 12px; }
 
+/* On small screens hide side arrows (swipe/tap to close is enough) */
 @media (max-width: 520px) {
-  .lightbox-nav { display: none; } /* hide arrows on small screens */
+  .lightbox-nav { display: none; }
+}
+
+/* -------------------------
+   Extra small screens tweaks
+-------------------------- */
+@media (max-width: 380px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .bio {
+    font-size: 0.82rem;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .profile-img {
+    transition: none;
+  }
 }
