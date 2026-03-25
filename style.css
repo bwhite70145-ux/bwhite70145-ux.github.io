@@ -1,13 +1,19 @@
 /* style.css */
+
+/* -------------------------
+   THEME
+-------------------------- */
 :root {
-  --bg-color: #0f1115;
-  --panel-bg: #151926;
-  --card-bg: #171c2b;
-  --border-color: rgba(255, 255, 255, 0.10);
-  --text-color: rgba(255, 255, 255, 0.92);
-  --text-muted: rgba(255, 255, 255, 0.68);
-  --accent-color: #4a90e2;
-  --shadow-color: rgba(0, 0, 0, 0.55);
+  --bg: #0f1115;
+  --panel: #151926;
+  --card: #171c2b;
+
+  --border: rgba(255, 255, 255, 0.10);
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.68);
+
+  --accent: #4a90e2;
+  --shadow: rgba(0, 0, 0, 0.55);
 
   --radius-lg: 16px;
   --radius-md: 14px;
@@ -16,34 +22,36 @@
   --max-width: 1100px;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html, body {
-  height: 100%;
-}
+html, body { height: 100%; }
 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 20% 0%, rgba(74, 144, 226, 0.12), transparent 60%),
-              radial-gradient(900px 500px at 80% 10%, rgba(160, 92, 255, 0.10), transparent 55%),
-              var(--bg-color);
-  color: var(--text-color);
+  color: var(--text);
   line-height: 1.4;
+
+  /* subtle dark gradient background */
+  background:
+    radial-gradient(900px 450px at 15% 0%, rgba(74, 144, 226, 0.14), transparent 60%),
+    radial-gradient(800px 420px at 85% 8%, rgba(160, 92, 255, 0.10), transparent 55%),
+    var(--bg);
 }
 
 /* -------------------------
-   PROFILE (Responsive)
+   PROFILE HEADER
 -------------------------- */
 .profile {
-  padding: clamp(20px, 4vw, 44px) 16px clamp(18px, 3vw, 28px);
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 55%),
-              var(--panel-bg);
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 18px var(--shadow-color);
+  padding: clamp(22px, 4vw, 46px) 16px clamp(16px, 3vw, 28px);
   text-align: center;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent 55%),
+    var(--panel);
+
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 18px var(--shadow);
 
   display: flex;
   flex-direction: column;
@@ -56,110 +64,135 @@ body {
   height: clamp(92px, 18vw, 140px);
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(74, 144, 226, 0.9);
+  background: #222;
+  border: 3px solid rgba(74, 144, 226, 0.95);
   box-shadow:
-    0 10px 30px rgba(74, 144, 226, 0.18),
-    0 0 0 6px rgba(74, 144, 226, 0.08);
+    0 12px 34px rgba(74, 144, 226, 0.18),
+    0 0 0 7px rgba(74, 144, 226, 0.10);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .profile-img:hover {
   transform: scale(1.03);
   box-shadow:
-    0 14px 38px rgba(74, 144, 226, 0.22),
-    0 0 0 7px rgba(74, 144, 226, 0.10);
+    0 16px 40px rgba(74, 144, 226, 0.22),
+    0 0 0 8px rgba(74, 144, 226, 0.12);
 }
 
 .name {
   margin: 0;
-  font-weight: 850;
+  font-size: clamp(1.25rem, 3.6vw, 2.25rem);
+  font-weight: 900;
   letter-spacing: 0.6px;
-  font-size: clamp(1.25rem, 3.4vw, 2.2rem);
-  color: var(--text-color);
 }
 
 .bio-text {
   margin: 0;
   font-size: clamp(0.95rem, 2.4vw, 1.05rem);
-  color: var(--text-muted);
+  color: var(--muted);
   font-style: italic;
 }
 
 /* -------------------------
    GALLERY GRID (Responsive)
+   - mobile: 2 columns
+   - tablet: 3 columns
+   - desktop: 4 columns
 -------------------------- */
 .gallery {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: clamp(16px, 3vw, 28px);
+  padding: clamp(14px, 3vw, 28px);
   display: grid;
   gap: clamp(12px, 2vw, 20px);
+}
 
-  /* Responsive columns:
-     - phones: 2 columns if possible
-     - tablets: 3 columns
-     - desktop: 4+ columns depending on width
-  */
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+/* Phones: 2 cards per row */
+@media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets: 3 cards per row */
+@media (min-width: 601px) and (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop: 4 cards per row */
+@media (min-width: 901px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* -------------------------
-   CARD (Image/Video)
+   CARD
 -------------------------- */
 .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%),
-              var(--card-bg);
-  border: 1px solid var(--border-color);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), transparent 45%),
+    var(--card);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 8px 22px var(--shadow-color);
+  box-shadow: 0 10px 26px var(--shadow);
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 14px 34px var(--shadow-color);
+  box-shadow: 0 16px 38px var(--shadow);
 }
 
-/* Media wrapper maintains a consistent aspect ratio */
+/* Media area: consistent sizing and responsive */
 .card img,
 .card video {
   width: 100%;
   display: block;
   background: #000;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border);
 
-  /* Keep nice consistent look without stretching */
-  aspect-ratio: 1 / 1;  /* square cards */
+  /* Choose look:
+     - square: 1/1
+     - portrait: 4/5 (looks great for photos)
+  */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
-/* Improve video controls feel */
-.card video {
-  outline: none;
-}
+/* Remove default outlines */
+.card video { outline: none; }
 
-/* Caption */
+/* Caption under videos */
 .bio {
   margin: 0;
   padding: 10px 12px 12px;
-  font-size: 0.9rem;
-  color: var(--text-muted);
   text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
 
-  /* Keep long filenames neat */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  user-select: none;
+}
+
+/* Optional: tighter spacing on very small phones */
+@media (max-width: 380px) {
+  .gallery { gap: 12px; }
+  .bio { font-size: 0.82rem; }
 }
 
 /* -------------------------
-   LIGHTBOX (Responsive)
+   LIGHTBOX POPUP
 -------------------------- */
 .lightbox {
   position: fixed;
   inset: 0;
-  display: none;
+  display: none; /* hidden by default */
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.88);
@@ -186,15 +219,16 @@ body {
   height: auto;
   border-radius: var(--radius-lg);
   background: #000;
-  box-shadow: 0 18px 60px rgba(0,0,0,0.7);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.7);
 }
 
 .lightbox-caption {
   margin: 0;
   font-size: 13px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   text-align: center;
   max-width: 94vw;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -209,7 +243,7 @@ body {
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.10);
-  color: white;
+  color: #fff;
   font-size: 28px;
   cursor: pointer;
 }
@@ -223,7 +257,7 @@ body {
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.10);
-  color: white;
+  color: #fff;
   font-size: 34px;
   cursor: pointer;
   display: grid;
@@ -234,25 +268,14 @@ body {
 .lightbox-nav.prev { left: 12px; }
 .lightbox-nav.next { right: 12px; }
 
-/* On small screens hide side arrows (swipe/tap to close is enough) */
+/* Hide arrows on small screens (more space) */
 @media (max-width: 520px) {
   .lightbox-nav { display: none; }
 }
 
 /* -------------------------
-   Extra small screens tweaks
+   ACCESSIBILITY
 -------------------------- */
-@media (max-width: 380px) {
-  .gallery {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  }
-
-  .bio {
-    font-size: 0.82rem;
-  }
-}
-
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .card,
   .profile-img {
